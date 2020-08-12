@@ -41,7 +41,15 @@ class Movie:
         else:
             logging.warning("Le film n'est pas la liste.")
 
+    def get_movies(self):
+        movies_title = self._get_movies()
+        movies = [Movie(movie_title) for movie_title in movies_title]
+        return movies
+
 
 if __name__ == '__main__':
     m = Movie("Harry Potter")
-    m.remove_from_movies()
+    # m.add_to_movies()
+    result = m.get_movies()
+    for el in result:
+        print(el.title)
