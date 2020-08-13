@@ -6,6 +6,13 @@ CUR_DIR = os.path.dirname(__file__)
 DATA_FILE = os.path.join(CUR_DIR, "data", "movies.json")
 
 
+def get_movies():
+    with open(DATA_FILE, "r") as f:
+        movies_title = json.load(f)
+    movies = [Movie(movie_title) for movie_title in movies_title]
+    return movies
+
+
 class Movie:
     def __init__(self, title):
         self.title = title.title()
@@ -41,15 +48,6 @@ class Movie:
         else:
             logging.warning("Le film n'est pas la liste.")
 
-    def get_movies(self):
-        movies_title = self._get_movies()
-        movies = [Movie(movie_title) for movie_title in movies_title]
-        return movies
-
 
 if __name__ == '__main__':
     m = Movie("Harry Potter")
-    # m.add_to_movies()
-    result = m.get_movies()
-    for el in result:
-        print(el.title)

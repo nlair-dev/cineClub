@@ -1,4 +1,5 @@
-from PySide2 import QtWidgets
+from PySide2 import QtWidgets, QtCore
+from movie import get_movies
 
 
 class App(QtWidgets.QWidget):
@@ -6,6 +7,7 @@ class App(QtWidgets.QWidget):
         super().__init__()
         self.setWindowTitle("Ciné club")
         self.setup_ui()
+        self.populate_movies()
 
     def setup_ui(self):
         self.main_layout = QtWidgets.QVBoxLayout(self)
@@ -18,6 +20,13 @@ class App(QtWidgets.QWidget):
         self.main_layout.addWidget(self.btn_addMovie)
         self.main_layout.addWidget(self.lw_movies)
         self.main_layout.addWidget(self.btn_removeMovies)
+
+    def populate_movies(self):
+        movies = get_movies()
+        for movie in movies:
+            lw_item = QtWidgets.QListWidgetItem(movie.title)
+            lw_item.setData(QtCore.Qt.UserRole, movie)
+            self.lw_movies.addItem(lw_item)
 
 
 if __name__ == '__main__':
