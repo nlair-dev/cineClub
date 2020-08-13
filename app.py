@@ -1,5 +1,5 @@
 from PySide2 import QtWidgets, QtCore
-from movie import get_movies
+from movie import get_movies, Movie
 
 
 class App(QtWidgets.QWidget):
@@ -35,7 +35,18 @@ class App(QtWidgets.QWidget):
         self.btn_removeMovies.clicked.connect(self.remove_movie)
 
     def add_movie(self):
-        print("Ajouter un film")
+        movie_title = self.le_movieTitle.text()
+        if movie_title:
+            movie = Movie(movie_title)
+            resultat = movie.add_to_movies()
+            if resultat:
+                lw_item = QtWidgets.QListWidgetItem(movie.title)
+                lw_item.setData(QtCore.Qt.UserRole, movie)
+                self.lw_movies.addItem(lw_item)
+                self.le_movieTitle.setText("")
+                return True
+
+        return False
 
     def remove_movie(self):
         print("Supprimer un film")
