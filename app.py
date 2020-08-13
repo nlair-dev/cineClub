@@ -8,6 +8,7 @@ class App(QtWidgets.QWidget):
         self.setWindowTitle("Ciné club")
         self.setup_ui()
         self.populate_movies()
+        self.setup_connections()
 
     def setup_ui(self):
         self.main_layout = QtWidgets.QVBoxLayout(self)
@@ -27,6 +28,17 @@ class App(QtWidgets.QWidget):
             lw_item = QtWidgets.QListWidgetItem(movie.title)
             lw_item.setData(QtCore.Qt.UserRole, movie)
             self.lw_movies.addItem(lw_item)
+
+    def setup_connections(self):
+        self.le_movieTitle.returnPressed.connect(self.add_movie)
+        self.btn_addMovie.clicked.connect(self.add_movie)
+        self.btn_removeMovies.clicked.connect(self.remove_movie)
+
+    def add_movie(self):
+        print("Ajouter un film")
+
+    def remove_movie(self):
+        print("Supprimer un film")
 
 
 if __name__ == '__main__':
