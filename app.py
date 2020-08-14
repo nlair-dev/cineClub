@@ -27,7 +27,7 @@ class App(QtWidgets.QWidget):
         movies = get_movies()
         for movie in movies:
             lw_item = QtWidgets.QListWidgetItem(movie.title)
-            lw_item.setData(QtCore.Qt.UserRole, movie)
+            lw_item.movie = movie
             self.lw_movies.addItem(lw_item)
 
     def setup_connections(self):
@@ -42,7 +42,7 @@ class App(QtWidgets.QWidget):
             resultat = movie.add_to_movies()
             if resultat:
                 lw_item = QtWidgets.QListWidgetItem(movie.title)
-                lw_item.setData(QtCore.Qt.UserRole, movie)
+                lw_item.movie = movie
                 self.lw_movies.addItem(lw_item)
                 self.le_movieTitle.setText("")
                 return True
@@ -51,7 +51,7 @@ class App(QtWidgets.QWidget):
 
     def remove_movie(self):
         for selected_item in self.lw_movies.selectedItems():
-            movie = selected_item.data(QtCore.Qt.UserRole)
+            movie = selected_item.movie
             movie.remove_from_movies()
             self.lw_movies.takeItem(self.lw_movies.row(selected_item))
 
