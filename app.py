@@ -15,6 +15,7 @@ class App(QtWidgets.QWidget):
         self.le_movieTitle = QtWidgets.QLineEdit()
         self.btn_addMovie = QtWidgets.QPushButton("Ajouter un film.")
         self.lw_movies = QtWidgets.QListWidget()
+        self.lw_movies.setSelectionMode(QtWidgets.QListWidget.ExtendedSelection)
         self.btn_removeMovies = QtWidgets.QPushButton("Supprimer le(s) film(s).")
 
         self.main_layout.addWidget(self.le_movieTitle)
@@ -49,7 +50,10 @@ class App(QtWidgets.QWidget):
         return False
 
     def remove_movie(self):
-        print("Supprimer un film")
+        for selected_item in self.lw_movies.selectedItems():
+            movie = selected_item.data(QtCore.Qt.UserRole)
+            movie.remove_from_movies()
+            self.lw_movies.takeItem(self.lw_movies.row(selected_item))
 
 
 if __name__ == '__main__':
